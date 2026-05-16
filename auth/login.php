@@ -124,14 +124,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div style="position:relative;z-index:10;max-width:400px;padding:0 64px;color:#FAFAF7;user-select:none;">
         <!-- Wordmark -->
         <div style="display:flex;align-items:flex-start;gap:12px;margin-bottom:56px;flex-wrap:wrap;">
-            <div style="width:38px;height:38px;border-radius:12px;background:rgba(255,255,255,.1);
-                        display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-                <svg width="18" height="18" fill="none" stroke="white" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z"/>
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                          d="M12 14l6.16-3.422A12.08 12.08 0 0118.82 17M12 14l-6.16-3.422A12.08 12.08 0 005.18 17"/>
-                </svg>
-            </div>
+            <img src="<?= BASE_URL ?>/assets/images/logo.png"
+                 alt="Logo <?= htmlspecialchars(SCHOOL_SHORT, ENT_QUOTES) ?>"
+                 style="width:38px;height:38px;border-radius:50%;object-fit:cover;flex-shrink:0;">
             <div style="min-width:0;">
                 <span style="font-size:18px;font-weight:600;letter-spacing:-0.03em;display:block;color:#FAFAF7;">
                     <?= htmlspecialchars(SCHOOL_SHORT) ?>
@@ -181,12 +176,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         <!-- Mobile wordmark -->
         <div style="display:flex;align-items:flex-start;gap:12px;margin-bottom:32px;flex-wrap:wrap;" class="lg:hidden">
-            <div style="width:32px;height:32px;border-radius:10px;background:#0A0E1A;
-                        display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-                <svg width="16" height="16" fill="none" stroke="white" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z"/>
-                </svg>
-            </div>
+            <img src="<?= BASE_URL ?>/assets/images/logo.png"
+                 alt="Logo <?= htmlspecialchars(SCHOOL_SHORT, ENT_QUOTES) ?>"
+                 style="width:32px;height:32px;border-radius:50%;object-fit:cover;flex-shrink:0;">
             <div style="min-width:0;">
                 <span style="font-size:17px;font-weight:700;display:block;color:#0A0E1A;line-height:1.25;letter-spacing:-0.03em;">
                     <?= htmlspecialchars(SCHOOL_SHORT) ?>

@@ -16,26 +16,15 @@ $initials  = implode('', array_map(fn($w) => mb_strtoupper(mb_substr($w, 0, 1)),
 
     <!-- Brand -->
     <div class="relative flex h-16 items-center gap-3 border-b border-mist px-6">
-        <div class="flex size-10 flex-shrink-0 items-center justify-center rounded-[14px] text-white shadow-sm"
-             style="background:linear-gradient(135deg,var(--ns-role-primary),var(--ns-role-accent));">
-            <svg class="size-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z"/>
-            </svg>
-        </div>
+        <img src="<?= BASE_URL ?>/assets/images/logo.png"
+             alt="Logo <?= htmlspecialchars(SCHOOL_SHORT, ENT_QUOTES) ?>"
+             class="size-10 flex-shrink-0 rounded-full object-cover shadow-sm">
         <div class="min-w-0 leading-tight">
             <p class="truncate font-serif text-[16px] font-semibold tracking-tight text-ink" title="<?= htmlspecialchars(SCHOOL_NAME, ENT_QUOTES) ?>">
                 <?= htmlspecialchars(SCHOOL_SHORT) ?>
             </p>
             <p class="text-[11px] font-medium uppercase tracking-[0.12em] text-zinc-400">Admin&nbsp;· <?= htmlspecialchars(ACADEMIC_YEAR) ?></p>
         </div>
-        <button type="button"
-                id="ns-sidebar-close"
-                class="absolute right-3 top-1/2 z-10 size-9 -translate-y-1/2 items-center justify-center rounded-xl border border-mist bg-paper text-zinc-500 shadow-sm transition hover:bg-cloud hover:text-ink active:scale-[0.96]"
-                aria-label="Tutup menu">
-            <svg class="size-[18px]" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-            </svg>
-        </button>
     </div>
 
     <!-- Nav -->
