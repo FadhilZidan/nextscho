@@ -171,7 +171,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </div>
 
 <!-- ══ RIGHT PANEL — Paper 40% ═══════════════════════════════════ -->
-<div style="flex:1;display:flex;align-items:center;justify-content:center;padding:48px 24px;background:#FAFAF7;min-height:100vh;">
+<div style="flex:1;display:flex;align-items:center;justify-content:center;background:#FAFAF7;min-height:100vh;" class="ns-login-panel">
     <div style="width:100%;max-width:340px;">
 
         <!-- Mobile wordmark -->

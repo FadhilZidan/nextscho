@@ -203,7 +203,7 @@ $initials   = implode('', array_map(fn($w) => mb_strtoupper(mb_substr($w, 0, 1))
 
         <!-- Flash message -->
         <?php if ($flash): ?>
-        <div id="flash-msg" class="mx-6 mt-4 px-4 py-3 rounded-xl text-sm font-medium ns-toast"
+        <div id="flash-msg" class="mx-4 sm:mx-6 mt-4 px-4 py-3 rounded-xl text-sm font-medium ns-toast"
              style="<?= $flash['type'] === 'success'
                  ? 'background:#F0FDF4;border-color:#6EE7B7;color:#065F46;'
                  : 'background:#FEF2F2;border-color:#FECACA;color:#991B1B;' ?>">
@@ -212,4 +212,4 @@ $initials   = implode('', array_map(fn($w) => mb_strtoupper(mb_substr($w, 0, 1))
         <?php endif; ?>
 
         <!-- Page content -->
-        <main class="flex-1 p-6">
+        <main class="flex-1 p-4 sm:p-6">

@@ -438,3 +438,72 @@ body {
 }
 
 .print-only { display: none; }
+
+/* ── Mobile Sidebar Slide ───────────────────────────────────── */
+@media (max-width: 1023px) {
+    .ns-sidebar-shell {
+        transform: translateX(-280px);
+    }
+    .ns-sidebar-shell.sidebar-open {
+        transform: translateX(0);
+        box-shadow: 0 0 50px rgba(0, 0, 0, 0.18);
+    }
+}
+
+/* Overlay visible state (toggled via JS) */
+.ns-sidebar-overlay-open {
+    opacity: 1 !important;
+    pointer-events: auto !important;
+}
+
+/* ── Responsive Spacing ─────────────────────────────────────── */
+/* Tighter table cells on small screens */
+@media (max-width: 640px) {
+    .ns-table th,
+    .ns-table td {
+        padding: 10px 14px;
+        font-size: 0.8125rem;
+    }
+}
+
+/* Page-header action buttons should wrap on very small screens */
+.ns-page-header > div:last-child {
+    flex-wrap: wrap;
+}
+
+/* ── Responsive Utilities ───────────────────────────────────── */
+/* Stat cards: full width on xs, 2-col on sm */
+@media (max-width: 639px) {
+    .ns-stat-grid-2 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+/* Tables inside panels scroll horizontally on mobile */
+.ns-glass-panel .overflow-x-auto,
+.ns-table-wrap .overflow-x-auto {
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Chip text stays on one line */
+.ns-chip {
+    white-space: nowrap;
+}
+
+/* Inputs and selects: always full width on xs */
+@media (max-width: 479px) {
+    .ns-form-input,
+    .ns-input {
+        font-size: 16px; /* prevent iOS zoom */
+    }
+}
+
+/* Login page: right panel padding */
+.ns-login-panel {
+    padding: 48px 24px;
+}
+@media (max-width: 479px) {
+    .ns-login-panel {
+        padding: 32px 16px;
+    }
+}

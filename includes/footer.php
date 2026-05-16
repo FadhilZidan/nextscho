@@ -24,46 +24,50 @@
         }
     }
 
-    function close() {
+    function sidebarClose() {
         setOpen(false);
     }
 
-    function toggle() {
+    function sidebarToggle() {
         setOpen(!sidebar.classList.contains('sidebar-open'));
     }
+
+    /* Expose globally so onclick attributes on the close button work */
+    window.nsSidebarClose = sidebarClose;
 
     if (openBtn) {
         openBtn.addEventListener('click', function (e) {
             e.preventDefault();
             e.stopPropagation();
-            toggle();
+            sidebarToggle();
         });
     }
 
     if (closeBtn) {
-        closeBtn.addEventListener('click', function () {
-            close();
+        closeBtn.addEventListener('click', function (e) {
+            e.stopPropagation();
+            sidebarClose();
         });
     }
 
-    overlay.addEventListener('click', close);
+    overlay.addEventListener('click', sidebarClose);
 
     window.addEventListener('resize', function () {
         if (window.matchMedia('(min-width: 1024px)').matches) {
-            close();
+            sidebarClose();
         }
     });
 
     document.addEventListener('keydown', function (e) {
         if (e.key === 'Escape') {
-            close();
+            sidebarClose();
         }
     });
 
     sidebar.querySelectorAll('a[href]').forEach(function (a) {
         a.addEventListener('click', function () {
             if (window.matchMedia('(max-width: 1023px)').matches) {
-                close();
+                sidebarClose();
             }
         });
     });
