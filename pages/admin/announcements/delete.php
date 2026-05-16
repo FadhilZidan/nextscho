@@ -1,0 +1,20 @@
+<?php
+define('APP_ROOT', dirname(__DIR__, 3));
+require_once APP_ROOT . '/config/session.php';
+require_once APP_ROOT . '/config/database.php';
+require_once APP_ROOT . '/auth/middleware.php';
+require_once APP_ROOT . '/models/Announcement.php';
+
+requireRole('admin');
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') { header('Location: ' . BASE_URL . '/pages/admin/announcements/index.php'); exit; }
+if (!verifyCsrf($_POST['csrf'] ?? '')) { flash('error', 'Token tidak valid.'); header('Location: ' . BASE_URL . '/pages/admin/announcements/index.php'); exit; }
+
+$id = (int) ($_POST['id'] ?? 0);
+try {
+    Announcement::delete($id);
+    flash('success', 'Pengumuman berhasil dihapus.');
+} catch (Exception $e) {
+    flash('error', 'Gagal menghapus: ' . $e->getMessage());
+}
+header('Location: ' . BASE_URL . '/pages/admin/announcements/index.php');
+exit;

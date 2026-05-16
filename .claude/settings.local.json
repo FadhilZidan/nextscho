@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(Head -50)",
+      "Bash(Get-ChildItem -Path . -Directory)",
+      "Bash(Select-Object Name)",
+      "Bash(Get-ChildItem -Path \"C:\\\\laragon\\\\www\\\\nextscho\\\\pages\" -Recurse -Force)",
+      "Bash(Select-Object FullName)",
+      "PowerShell(tree \"C:\\\\laragon\\\\www\\\\nextscho\" /A /F | Where-Object { $_ -notmatch \"nextscho-sis|node_modules\" } | head -150)",
+      "Bash(C:\\\\laragon\\\\bin\\\\php\\\\php8.2.27\\\\php.exe -l \"C:\\\\laragon\\\\www\\\\nextscho\\\\includes\\\\header.php\")",
+      "Bash(C:\\\\laragon\\\\bin\\\\php\\\\php8.2.27\\\\php.exe -l \"C:\\\\laragon\\\\www\\\\nextscho\\\\includes\\\\sidebar_admin.php\")",
+      "Bash(C:\\\\laragon\\\\bin\\\\php\\\\php8.2.27\\\\php.exe -l \"C:\\\\laragon\\\\www\\\\nextscho\\\\auth\\\\login.php\")",
+      "Bash(C:\\\\laragon\\\\bin\\\\php\\\\php8.2.27\\\\php.exe -l \"C:\\\\laragon\\\\www\\\\nextscho\\\\pages\\\\student\\\\dashboard.php\")",
+      "Bash(C:\\\\laragon\\\\bin\\\\php\\\\php8.2.27\\\\php.exe -l \"C:\\\\laragon\\\\www\\\\nextscho\\\\pages\\\\teacher\\\\dashboard.php\")",
+      "PowerShell(Get-ChildItem -Path \"C:\\\\laragon\\\\www\\\\nextscho\" -Force | Select-Object Name, @{Name='Type';Expression={if\\($_.PSIsContainer\\){'Directory'}else{'File'}}} | Format-Table -AutoSize)"
+    ]
+  }
+}

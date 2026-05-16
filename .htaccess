@@ -1,0 +1,10 @@
+Options -Indexes
+
+# Block sensitive files
+<FilesMatch "^(\.env|\.htaccess|.*\.sql|.*\.log)$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# PHP errors: off in production
+# php_flag display_errors Off
