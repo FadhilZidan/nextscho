@@ -69,6 +69,13 @@ require_once APP_ROOT . '/includes/header.php';
 ?>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<style>
+@page { size: A4 landscape; margin: 1.5cm; }
+@media print {
+    .ns-table th, .ns-table td { border: 1px solid #d1d5db !important; }
+    .ns-table thead th { background: #f3f4f6 !important; color: #111827 !important; }
+}
+</style>
 
 <div data-animate="fade-up">
 
@@ -114,7 +121,42 @@ require_once APP_ROOT . '/includes/header.php';
         foreach ($classes as $c) { if ($c['id'] == $classId) $className = $c['label']; }
     ?>
     <div id="report-panel" class="ns-glass-panel overflow-hidden mb-6">
-        <div class="px-6 py-5 border-b border-gray-100 bg-gray-50/50 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+
+        <!-- ══ KOP SURAT (hanya cetak/PDF) ══════════════════════════════ -->
+        <div id="print-letterhead" class="print-only" style="padding:20px 28px 0;">
+            <!-- Logo + Identitas Sekolah -->
+            <div style="display:flex;align-items:center;gap:18px;padding-bottom:10px;border-bottom:3px double #1e3a5f;margin-bottom:14px;">
+                <img src="<?= BASE_URL ?>/assets/images/logo.png" alt="Logo <?= SCHOOL_NAME ?>"
+                     style="width:72px;height:72px;object-fit:contain;flex-shrink:0;">
+                <div style="flex:1;text-align:center;line-height:1.45;">
+                    <div style="font-size:9px;font-weight:500;color:#6b7280;text-transform:uppercase;letter-spacing:.07em;margin-bottom:2px;">
+                        <?= SCHOOL_PROV ?>
+                    </div>
+                    <div style="font-size:18px;font-weight:800;color:#1e3a5f;text-transform:uppercase;letter-spacing:.07em;margin:2px 0;">
+                        <?= SCHOOL_NAME ?>
+                    </div>
+                    <div style="font-size:9px;color:#6b7280;">
+                        <?= SCHOOL_ADDRESS ?>
+                    </div>
+                </div>
+                <div style="width:72px;flex-shrink:0;"></div>
+            </div>
+            <!-- Judul Laporan -->
+            <div style="text-align:center;margin-bottom:14px;">
+                <div style="font-size:13.5px;font-weight:700;text-transform:uppercase;text-decoration:underline;letter-spacing:.05em;color:#111827;">
+                    Laporan Nilai Siswa
+                </div>
+                <div style="font-size:10px;color:#374151;margin-top:4px;">
+                    Kelas: <b><?= htmlspecialchars($className) ?></b> &nbsp;|&nbsp;
+                    Semester: <b><?= $semester ?> (<?= $semester == 1 ? 'Ganjil' : 'Genap' ?>)</b> &nbsp;|&nbsp;
+                    Tahun Ajaran: <b><?= htmlspecialchars($year) ?></b> &nbsp;|&nbsp;
+                    Jumlah Siswa: <b><?= count($matrix) ?> orang</b>
+                </div>
+            </div>
+        </div>
+        <!-- ════════════════════════════════════════════════════════════ -->
+
+        <div class="px-6 py-5 border-b border-gray-100 bg-gray-50/50 flex flex-col sm:flex-row sm:items-center justify-between gap-4 no-print">
             <div>
                 <p class="text-base font-bold text-gray-900">
                     Laporan Nilai · <?= htmlspecialchars($className) ?>
@@ -178,6 +220,32 @@ require_once APP_ROOT . '/includes/header.php';
                 </tbody>
             </table>
         </div>
+
+        <!-- ══ TANDA TANGAN (hanya cetak/PDF) ════════════════════════════ -->
+        <div id="print-signature" class="print-only">
+            <div style="display:flex;justify-content:space-between;padding:24px 64px 16px;border-top:1px solid #e5e7eb;margin-top:4px;">
+                <div style="text-align:center;">
+                    <div style="font-size:10px;margin-bottom:56px;line-height:1.7;">
+                        Mengetahui,<br><b>Kepala Sekolah</b>
+                    </div>
+                    <div style="border-top:1px solid #111827;padding-top:5px;min-width:200px;">
+                        <div style="font-size:10px;font-weight:600;height:15px;">&nbsp;</div>
+                        <div style="font-size:9px;color:#6b7280;">NIP. ________________________________</div>
+                    </div>
+                </div>
+                <div style="text-align:center;">
+                    <div style="font-size:10px;margin-bottom:56px;line-height:1.7;">
+                        Palembang, <?= date('d F Y') ?><br><b>Wali Kelas</b>
+                    </div>
+                    <div style="border-top:1px solid #111827;padding-top:5px;min-width:200px;">
+                        <div style="font-size:10px;font-weight:600;height:15px;">&nbsp;</div>
+                        <div style="font-size:9px;color:#6b7280;">NIP. ________________________________</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- ════════════════════════════════════════════════════════════ -->
+
     </div>
     <?php else: ?>
     <div class="ns-glass-panel p-16 text-center flex flex-col items-center gap-3">
@@ -197,16 +265,28 @@ require_once APP_ROOT . '/includes/header.php';
 
 <script>
 function exportReportPDF() {
-    const element = document.getElementById('report-panel');
-    const filename = 'Laporan_Nilai_<?= str_replace(' ', '_', addslashes($className)) ?>_Sem<?= $semester ?>.pdf';
+    const element    = document.getElementById('report-panel');
+    const letterhead = document.getElementById('print-letterhead');
+    const signature  = document.getElementById('print-signature');
+    const filename   = 'Laporan_Nilai_<?= str_replace(' ', '_', addslashes($className)) ?>_Sem<?= $semester ?>.pdf';
+
+    // Tampilkan kop surat & tanda tangan saat PDF di-generate
+    letterhead.style.display = 'block';
+    signature.style.display  = 'block';
+
     const opt = {
-        margin:       0.5,
-        filename:     filename,
-        image:        { type: 'jpeg', quality: 0.98 },
-        html2canvas:  { scale: 2, useCORS: true },
-        jsPDF:        { unit: 'in', format: 'a4', orientation: 'landscape' }
+        margin:      [0.4, 0.4, 0.4, 0.4],
+        filename:    filename,
+        image:       { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2, useCORS: true, logging: false },
+        jsPDF:       { unit: 'in', format: 'a4', orientation: 'landscape' }
     };
-    html2pdf().set(opt).from(element).save();
+
+    html2pdf().set(opt).from(element).save().then(() => {
+        // Sembunyikan kembali setelah selesai
+        letterhead.style.display = '';
+        signature.style.display  = '';
+    });
 }
 </script>
 
